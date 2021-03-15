@@ -50,6 +50,7 @@ define typo3::install::source::files (
       command => 'ln -s typo3_src/index.php index.php',
       cwd     => $site_path,
       require => File[$target],
+      path    => $facts['path'],
       unless  => 'test -L index.php',
     }
 
@@ -57,6 +58,7 @@ define typo3::install::source::files (
       command => 'ln -s typo3_src/typo3 typo3',
       cwd     => $site_path,
       require => File[$target],
+      path    => $facts['path'],
       unless  => 'test -d typo3',
     }
 
@@ -65,6 +67,7 @@ define typo3::install::source::files (
         command => 'ln -s typo3_src/t3lib t3lib',
         cwd     => $site_path,
         require => File[$target],
+        path    => $facts['path'],
         unless  => 'test -d t3lib',
       }
     }

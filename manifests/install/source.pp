@@ -16,19 +16,16 @@
 # Tommy Muehle
 #
 define typo3::install::source (
-
   $version,
-  $src_path
-
+  $src_path,
+  $download_url = $typo3::download_url,
 ) {
-
-  include typo3::params
-
   $source_file = "${version}.tar.gz"
 
   exec { "Get ${name}":
-    command => "curl -Lk ${typo3::params::download_url}/${version} >${source_file}",
+    command => "curl -Lk ${download_url}/${version} >${source_file}",
     cwd     => $src_path,
+    path    => $facts['path'],
     onlyif  => "test ! -d typo3_src-${version}",
   }
 
@@ -36,6 +33,7 @@ define typo3::install::source (
     command => "tar -xzf ${source_file}",
     cwd     => $src_path,
     require => Exec["Get ${name}"],
+    path    => $facts['path'],
     creates => "${src_path}/typo3_src-${version}",
   }
 
@@ -43,7 +41,8 @@ define typo3::install::source (
     command => "rm -f ${src_path}/${source_file}",
     cwd     => $src_path,
     require => Exec["Untar ${name}"],
-    onlyif  => "test ! -f ${src_path}/${source_file}",
+    path    => $facts['path'],
+    onlyif  => "test -f ${src_path}/${source_file}",
   }
 
 }

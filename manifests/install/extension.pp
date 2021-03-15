@@ -50,6 +50,7 @@ define typo3::install::extension (
     command => "git clone --no-hardlinks ${repo} ${key}",
     creates => "${path}/${key}/.git",
     cwd     => $path,
+    path    => $facts['path'],
     onlyif  => "test ! -d ${path}/${key}",
     require => Package[$typo3::packages],
   }
@@ -58,6 +59,7 @@ define typo3::install::extension (
     command => "git checkout ${$tag}",
     cwd     => "${path}/${key}",
     notify  => Exec["chown ${key}"],
+    path    => $facts['path'],
     require => Exec["git-clone ${key}"]
   }
 
@@ -65,6 +67,7 @@ define typo3::install::extension (
     command     => "chown -R ${owner}:${group} ${path}/${key}",
     refreshonly => true,
     cwd         => $path,
+    path        => $facts['path'],
     require     => Exec["git-clone ${key}"]
   }
 

@@ -5,7 +5,9 @@
 # == Author
 # Tommy Muehle
 #
-class typo3 (){
+class typo3 (
+  String $download_url = 'get.typo3.org',
+){
 
   if $::operatingsystem =~ /^(Debian|Ubuntu)$/ and versioncmp($::operatingsystemrelease, '12') < 0 {
     $packages = [ 'curl', 'git-core' ]

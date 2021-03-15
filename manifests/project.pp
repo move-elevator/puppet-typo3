@@ -84,11 +84,11 @@ define typo3::project (
   include typo3
 
   if ( $site_user != $site_group ) {
-    $dir_permission     = 2770
-    $file_permission    = 660
+    $dir_permission     = '2770'
+    $file_permission    = '0660'
   } else {
-    $dir_permission     = 2755
-    $file_permission    = 644
+    $dir_permission     = '2755'
+    $file_permission    = '0644'
   }
 
   if ( $typo3_src_path == '' or $typo3_src_path == undef ) {
